@@ -32,7 +32,7 @@ export default function DisplayPage() {
     const fetchAllSections = async () => {
       const requests = sectionNames.map((section) =>
         axios
-          .post('http://192.168.1.48:8008/subsection', {
+          .post('http://192.168.1.48:5000/subsection', {
             industry,
             region,
             subsection: section,
@@ -105,13 +105,21 @@ export default function DisplayPage() {
       </div>
 
       <div className="flex-1 p-4 ml-0 md:ml-10 lg:ml-80 max-w-[1100px] mt-4">
-        {isLoading ? (
-          <div>Loading {activeSection}...</div>
-        ) : currentContent ? (
-          <ResearchReport contentSection={currentContent} />
-        ) : (
-          <div>Error loading {activeSection}.</div>
-        )}
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center h-64">
+          {/* Bigger spinner: 24x24 with thicker border */}
+          <div className="animate-spin rounded-full h-24 w-24 border-8 border-blue-500 border-t-transparent"></div>
+          
+          {/* Bigger text */}
+          <p className="mt-6 text-xl text-gray-700 font-medium">
+            Loading {activeSection}...
+          </p>
+        </div>
+      ) : currentContent ? (
+        <ResearchReport contentSection={currentContent} />
+      ) : (
+        <div>Error loading {activeSection}.</div>
+      )}
       </div>
     </div>
   );
